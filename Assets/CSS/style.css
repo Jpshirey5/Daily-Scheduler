@@ -55,5 +55,14 @@ textarea {
 
 .saveBtn i:hover {
   font-size: 20px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+#currentDay {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 100;
+  margin: 0;
+  padding: 0%;
+  
 }

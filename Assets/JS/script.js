@@ -1,31 +1,39 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-
-//Variables
-var today = timeStamp();
- 
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
+// JQuery Code that wraps all code and fires it after the HTML has completed.
+$(document).ready(function() {
   
+  // Applying the past, present, or future classes to each time block.
+  // Current hour
+  let currentHour = new Date().getHours();
+  let today
 
+  // Loop through each time block
+  $('.time-block').each(function() {
+    var blockHour = parseInt($(this).attr('id').split('-')[1]);
 
+    // Compare the id to the current hour
+    if (blockHour < currentHour) {
+      $(this).addClass('past');
+    } else if (blockHour === currentHour) {
+      $(this).addClass('present');
+    } else {
+      $(this).addClass('future');
+      }
+   });
+  });
 
-
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
+  // User inputs and Saving to Local Storage
+$('textarea').each(function() {
+  var textAreaId = $(this).attr('id');
   
+  if (localStorage.getItem(textAreaId)) {
+    $(this).val(localStorage.getItem(textAreaId));
+  }
 
-
-
- 
- //Display time and date
- $('#currentDay').text(today.format('LL'));
-
-
- $(function () {
+  $(this).on('change', function() {
+    localStorage.setItem(textAreaId, $(this).val());
+  });
 });
+
+  // Display day and date
+const currentDateTime = dayjs().format('dddd, MMMM DD, YYYY');
+  document.getElementById("currentDay").innerHTML = currentDateTime;
